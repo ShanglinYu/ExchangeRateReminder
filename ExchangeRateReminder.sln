@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30002.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeRateReminder", "ExchangeRateReminder\ExchangeRateReminder.csproj", "{56347179-C4F1-49D7-B3A4-9C2B2FA00F01}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{56347179-C4F1-49D7-B3A4-9C2B2FA00F01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56347179-C4F1-49D7-B3A4-9C2B2FA00F01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56347179-C4F1-49D7-B3A4-9C2B2FA00F01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56347179-C4F1-49D7-B3A4-9C2B2FA00F01}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6D5F439E-DF3D-418A-B64C-9F45679799AE}
+	EndGlobalSection
+EndGlobal
