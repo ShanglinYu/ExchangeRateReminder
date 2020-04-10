@@ -120,6 +120,7 @@ namespace ExchangeRateReminder
                 _newPriceReminder1.Set(_exchangeRateRetriever, decimal.Parse(tbAlertPrice1.Text), cbAlertCondition1.Text);
                 btnSetAlert1.Enabled = false;
                 btnCancelAlert1.Enabled = true;
+                cbAlertCondition1.Enabled = tbAlertPrice1.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -145,6 +146,7 @@ namespace ExchangeRateReminder
             _newPriceReminder1.ReminderTriggered -= _newPriceReminder1_ReminderTriggered;
             btnSetAlert1.Enabled = true;
             btnCancelAlert1.Enabled = false;
+            cbAlertCondition1.Enabled = tbAlertPrice1.Enabled = true;
         }
 
         private void btnSetAlert2_Click(object sender, EventArgs e)
@@ -155,6 +157,7 @@ namespace ExchangeRateReminder
                 _newPriceReminder2.Set(_exchangeRateRetriever, decimal.Parse(tbAlertPrice2.Text), cbAlertCondition2.Text);
                 btnSetAlert2.Enabled = false;
                 btnCancelAlert2.Enabled = true;
+                cbAlertCondition2.Enabled = tbAlertPrice2.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -168,6 +171,7 @@ namespace ExchangeRateReminder
             _newPriceReminder2.ReminderTriggered -= _newPriceReminder1_ReminderTriggered;
             btnSetAlert2.Enabled = true;
             btnCancelAlert2.Enabled = false;
+            cbAlertCondition2.Enabled = tbAlertPrice2.Enabled = true;
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -203,6 +207,16 @@ namespace ExchangeRateReminder
         private void showWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowWindow();
+        }
+
+        private void Form1_TextChanged(object sender, EventArgs e)
+        {
+            notifyIcon1.Text = Text;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            notifyIcon1.Text = Text;
         }
     }
 }
