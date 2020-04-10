@@ -20,6 +20,10 @@ namespace ExchangeRateReminder
             InitializeComponent();
 
             notifyIcon1.Icon = Icon = Resources.logo;
+            cbbLeft.SelectedIndex = 1;
+            cbbRight.SelectedIndex = 2;
+            cbAlertCondition1.SelectedIndex = 2;
+            cbAlertCondition2.SelectedIndex = 4;
 
             _newPriceReminder1 = Factory.NewPriceReminder();
             _newPriceReminder2 = Factory.NewPriceReminder();
@@ -174,14 +178,14 @@ namespace ExchangeRateReminder
 
         private void ShowWindow()
         {
-            WindowState = FormWindowState.Normal;
+            Show();
             ShowInTaskbar = true;
             Activate();
         }
 
         private void HideToTray()
         {
-            WindowState = FormWindowState.Minimized;
+            Hide();
             ShowInTaskbar = false;
         }
 
