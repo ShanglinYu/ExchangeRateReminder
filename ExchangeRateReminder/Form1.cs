@@ -12,8 +12,8 @@ namespace ExchangeRateReminder
         private const string WindowTitle = "ERR";
         private IExchangeRateRetriever _exchangeRateRetriever;
         private bool _fromLeftToRight = true;
-        private IPriceReminder _newPriceReminder1;
-        private IPriceReminder _newPriceReminder2;
+        private readonly IPriceReminder _newPriceReminder1;
+        private readonly IPriceReminder _newPriceReminder2;
 
         public Form1()
         {
@@ -26,7 +26,9 @@ namespace ExchangeRateReminder
             cbAlertCondition2.SelectedIndex = 4;
 
             _newPriceReminder1 = Factory.NewPriceReminder();
+            _newPriceReminder1.ReminderSet += _newPriceReminder1_ReminderSet;
             _newPriceReminder2 = Factory.NewPriceReminder();
+            _newPriceReminder2.ReminderSet += _newPriceReminder2_ReminderSet;
         }
 
         private void btnStart_Click(object sender, EventArgs e)
@@ -89,6 +91,10 @@ namespace ExchangeRateReminder
                     gbAlert.Enabled = btnStop.Enabled = false;
                     tbOutput.Text = string.Empty;
                     tbOutput.BackColor = BackColor;
+
+                    //Cancel alert
+                    _newPriceReminder1.Cancel();
+                    _newPriceReminder2.Cancel();
                     break;
                 case ExchangeRateRetrieverStatus.Online:
                 case ExchangeRateRetrieverStatus.Error:
@@ -112,15 +118,39 @@ namespace ExchangeRateReminder
             btnDirection.Text = _fromLeftToRight ? "-->" : "<--";
         }
 
+        private void _newPriceReminder1_ReminderSet(IPriceReminder reminder, bool isSet)
+        {
+            if (isSet)
+            {
+                reminder.ReminderTriggered += PriceReminderTriggered;
+            }
+            else
+            {
+                reminder.ReminderTriggered -= PriceReminderTriggered;
+            }
+            cbAlertCondition1.Enabled = tbAlertPrice1.Enabled = btnSetAlert1.Enabled = !isSet;
+            btnCancelAlert1.Enabled = isSet;
+        }
+
+        private void _newPriceReminder2_ReminderSet(IPriceReminder reminder, bool isSet)
+        {
+            if (isSet)
+            {
+                reminder.ReminderTriggered += PriceReminderTriggered;
+            }
+            else
+            {
+                reminder.ReminderTriggered -= PriceReminderTriggered;
+            }
+            btnCancelAlert2.Enabled = isSet;
+            btnSetAlert2.Enabled = cbAlertCondition2.Enabled = tbAlertPrice2.Enabled = !isSet;
+        }
+
         private void btnSetAlert1_Click(object sender, EventArgs e)
         {
             try
             {
-                _newPriceReminder1.ReminderTriggered += _newPriceReminder1_ReminderTriggered;
                 _newPriceReminder1.Set(_exchangeRateRetriever, decimal.Parse(tbAlertPrice1.Text), cbAlertCondition1.Text);
-                btnSetAlert1.Enabled = false;
-                btnCancelAlert1.Enabled = true;
-                cbAlertCondition1.Enabled = tbAlertPrice1.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -128,11 +158,23 @@ namespace ExchangeRateReminder
             }
         }
 
-        private void _newPriceReminder1_ReminderTriggered(IPriceReminder obj)
+        private void btnSetAlert2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                _newPriceReminder2.Set(_exchangeRateRetriever, decimal.Parse(tbAlertPrice2.Text), cbAlertCondition2.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void PriceReminderTriggered(IPriceReminder obj)
         {
             if (InvokeRequired)
             {
-                BeginInvoke((Action<IPriceReminder>)_newPriceReminder1_ReminderTriggered, obj);
+                BeginInvoke((Action<IPriceReminder>)PriceReminderTriggered, obj);
                 return;
             }
 
@@ -143,35 +185,11 @@ namespace ExchangeRateReminder
         private void btnCancelAlert1_Click(object sender, EventArgs e)
         {
             _newPriceReminder1.Cancel();
-            _newPriceReminder1.ReminderTriggered -= _newPriceReminder1_ReminderTriggered;
-            btnSetAlert1.Enabled = true;
-            btnCancelAlert1.Enabled = false;
-            cbAlertCondition1.Enabled = tbAlertPrice1.Enabled = true;
-        }
-
-        private void btnSetAlert2_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                _newPriceReminder2.ReminderTriggered += _newPriceReminder1_ReminderTriggered;
-                _newPriceReminder2.Set(_exchangeRateRetriever, decimal.Parse(tbAlertPrice2.Text), cbAlertCondition2.Text);
-                btnSetAlert2.Enabled = false;
-                btnCancelAlert2.Enabled = true;
-                cbAlertCondition2.Enabled = tbAlertPrice2.Enabled = false;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(this, ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void btnCancelAlert2_Click(object sender, EventArgs e)
         {
             _newPriceReminder2.Cancel();
-            _newPriceReminder2.ReminderTriggered -= _newPriceReminder1_ReminderTriggered;
-            btnSetAlert2.Enabled = true;
-            btnCancelAlert2.Enabled = false;
-            cbAlertCondition2.Enabled = tbAlertPrice2.Enabled = true;
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -200,6 +218,15 @@ namespace ExchangeRateReminder
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (_exchangeRateRetriever != null)
+            {
+                _exchangeRateRetriever.StatusChanged -= _exchangeRateRetriever_StatusChanged;
+                _exchangeRateRetriever.ExchangeRateChanged -= _exchangeRateRetriever_ExchangeRateChanged;
+            }
+
+            _newPriceReminder1.ReminderSet -= _newPriceReminder1_ReminderSet;
+            _newPriceReminder2.ReminderSet -= _newPriceReminder2_ReminderSet;
+
             Dispose();
             Close();
         }

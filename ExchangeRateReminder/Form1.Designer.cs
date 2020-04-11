@@ -226,6 +226,7 @@
             // 
             // btnCancelAlert2
             // 
+            this.btnCancelAlert2.Enabled = false;
             this.btnCancelAlert2.Location = new System.Drawing.Point(250, 43);
             this.btnCancelAlert2.Name = "btnCancelAlert2";
             this.btnCancelAlert2.Size = new System.Drawing.Size(55, 23);
@@ -278,6 +279,7 @@
             // 
             // btnCancelAlert1
             // 
+            this.btnCancelAlert1.Enabled = false;
             this.btnCancelAlert1.Location = new System.Drawing.Point(250, 14);
             this.btnCancelAlert1.Name = "btnCancelAlert1";
             this.btnCancelAlert1.Size = new System.Drawing.Size(55, 23);

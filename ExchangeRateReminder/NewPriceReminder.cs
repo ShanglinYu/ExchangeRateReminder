@@ -8,13 +8,28 @@ namespace ExchangeRateReminder
         private ReminderConditionOperator.Operator _operator;
         private bool _set;
 
+        public event Action<IPriceReminder, bool> ReminderSet;
+
         public event Action<IPriceReminder> ReminderTriggered;
 
         public IExchangeRateRetriever Retriever { get; private set; }
 
+        public bool IsSet
+        {
+            get => _set;
+            private set
+            {
+                if (value != _set)
+                {
+                    _set = value;
+                    ReminderSet?.Invoke(this, value);
+                }
+            }
+        }
+
         public void Set(IExchangeRateRetriever retriever, decimal targetPrice, string strOperator)
         {
-            if (_set)
+            if (IsSet)
             {
                 return;
             }
@@ -32,7 +47,7 @@ namespace ExchangeRateReminder
 
             Retriever.ExchangeRateChanged += Retriever_ExchangeRateChanged;
 
-            _set = true;
+            IsSet = true;
         }
 
         private void Retriever_ExchangeRateChanged(ExchangeRateItem obj)
@@ -65,14 +80,14 @@ namespace ExchangeRateReminder
 
         public void Cancel()
         {
-            if (!_set)
+            if (!IsSet)
             {
                 return;
             }
 
             Retriever.ExchangeRateChanged -= Retriever_ExchangeRateChanged;
             Retriever = null;
-            _set = false;
+            IsSet = false;
         }
     }
 }
