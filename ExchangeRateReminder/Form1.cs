@@ -62,28 +62,29 @@ namespace ExchangeRateReminder
             _exchangeRateRetriever.Start();
         }
 
-        private void _exchangeRateRetriever_ExchangeRateChanged(ExchangeRateItem obj)
+        private void _exchangeRateRetriever_ExchangeRateChanged(ExchangeRateItem eri)
         {
             if (InvokeRequired)
             {
-                BeginInvoke((Action<ExchangeRateItem>)_exchangeRateRetriever_ExchangeRateChanged, obj);
+                BeginInvoke((Action<ExchangeRateItem>)_exchangeRateRetriever_ExchangeRateChanged, eri);
                 return;
             }
 
-            tbOutput.Text = obj.ToString();
-            tbOutput.BackColor = obj.New == obj.YestdayClose ? BackColor : obj.New > obj.YestdayClose ? Color.Red : Color.LightGreen;
+            Text = $"{WindowTitle}-{_exchangeRateRetriever.CurrencyFrom}{_exchangeRateRetriever.CurrencyTo}-{eri.New:N4}";
+            tbOutput.Text = eri.ToString();
+            tbOutput.BackColor = eri.New == eri.YestdayClose ? BackColor : eri.New > eri.YestdayClose ? Color.Red : Color.LightGreen;
         }
 
-        private void _exchangeRateRetriever_StatusChanged(ExchangeRateRetrieverStatus obj)
+        private void _exchangeRateRetriever_StatusChanged(ExchangeRateRetrieverStatus status)
         {
             if (InvokeRequired)
             {
-                BeginInvoke((Action<ExchangeRateRetrieverStatus>)_exchangeRateRetriever_StatusChanged, obj);
+                BeginInvoke((Action<ExchangeRateRetrieverStatus>)_exchangeRateRetriever_StatusChanged, status);
                 return;
             }
 
-            toolStripStatusLabel1.Text = obj.ToString();
-            switch (obj)
+            toolStripStatusLabel1.Text = status.ToString().ToUpper();
+            switch (status)
             {
                 case ExchangeRateRetrieverStatus.Stopped:
                     Text = WindowTitle;

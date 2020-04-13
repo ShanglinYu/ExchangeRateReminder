@@ -169,7 +169,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 12);
             this.label1.TabIndex = 9;
-            this.label1.Text = "Price:";
+            this.label1.Text = "PRICE:";
             // 
             // tbAlertPrice1
             // 
@@ -185,7 +185,7 @@
             this.btnSetAlert1.Name = "btnSetAlert1";
             this.btnSetAlert1.Size = new System.Drawing.Size(55, 23);
             this.btnSetAlert1.TabIndex = 11;
-            this.btnSetAlert1.Text = "Set";
+            this.btnSetAlert1.Text = "SET";
             this.btnSetAlert1.UseVisualStyleBackColor = true;
             this.btnSetAlert1.Click += new System.EventHandler(this.btnSetAlert1_Click);
             // 
@@ -222,7 +222,7 @@
             this.gbAlert.Size = new System.Drawing.Size(309, 74);
             this.gbAlert.TabIndex = 13;
             this.gbAlert.TabStop = false;
-            this.gbAlert.Text = "Alert";
+            this.gbAlert.Text = "ALERT";
             // 
             // btnCancelAlert2
             // 
@@ -231,7 +231,7 @@
             this.btnCancelAlert2.Name = "btnCancelAlert2";
             this.btnCancelAlert2.Size = new System.Drawing.Size(55, 23);
             this.btnCancelAlert2.TabIndex = 18;
-            this.btnCancelAlert2.Text = "Cancel";
+            this.btnCancelAlert2.Text = "CANCEL";
             this.btnCancelAlert2.UseVisualStyleBackColor = true;
             this.btnCancelAlert2.Click += new System.EventHandler(this.btnCancelAlert2_Click);
             // 
@@ -242,7 +242,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 12);
             this.label2.TabIndex = 14;
-            this.label2.Text = "Price:";
+            this.label2.Text = "PRICE:";
             // 
             // btnSetAlert2
             // 
@@ -250,7 +250,7 @@
             this.btnSetAlert2.Name = "btnSetAlert2";
             this.btnSetAlert2.Size = new System.Drawing.Size(55, 23);
             this.btnSetAlert2.TabIndex = 16;
-            this.btnSetAlert2.Text = "Set";
+            this.btnSetAlert2.Text = "SET";
             this.btnSetAlert2.UseVisualStyleBackColor = true;
             this.btnSetAlert2.Click += new System.EventHandler(this.btnSetAlert2_Click);
             // 
@@ -284,7 +284,7 @@
             this.btnCancelAlert1.Name = "btnCancelAlert1";
             this.btnCancelAlert1.Size = new System.Drawing.Size(55, 23);
             this.btnCancelAlert1.TabIndex = 13;
-            this.btnCancelAlert1.Text = "Cancel";
+            this.btnCancelAlert1.Text = "CANCEL";
             this.btnCancelAlert1.UseVisualStyleBackColor = true;
             this.btnCancelAlert1.Click += new System.EventHandler(this.btnCancelAlert1_Click);
             // 
